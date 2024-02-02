@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTTP Server in Kotlin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/kotlin.min.js"></script>
+    <script>
+        (async () => {
+            const htmlSource = await getHtmlSource();
+            const htmlCode = document.querySelector("#html-code")
+            htmlCode.innerHTML = hljs.highlight("html", htmlSource).value;
+
+            const kotlinSource = await getServerSource();
+            const kotlinCode = document.querySelector("#kotlin-code")
+            kotlinCode.innerHTML = hljs.highlight("kotlin", kotlinSource).value;
+        })()
+
+        async function getHtmlSource() {
+            let r = await fetch("/")
+            return r.text()
+        }
+
+        async function getServerSource() {
+            let r = await fetch("/api/source")
+            return await r.text()
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+        @import url('https://fonts.googleapis.com/css?family=Fira+Code');
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+        }
+
+        body {
+            background: #e1e1e1;
+            font-family: "Noto Sans";
+            font-size: 14px;
+            line-height: 1.5;
+
+            padding: 2rem;
+
+            display: flex;
+            flex-flow: column;
+            gap: 2rem;
+            align-items: center;
+
+            & h1 {
+                font-size: 2.4rem;
+                font-weight: bold;
+                text-align: center;
+            }
+            & h2 {
+                font-size: 1.6rem;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            & pre {
+                height: 40rem;
+                width: fit-content;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 1rem;
+                padding-right: 2em;
+
+                background: #202020;
+                border-radius: 1rem;
+                font-size: .8rem;
+
+                & code {
+                    filter: invert(1);
+                    font-family: "Fira Code", monospace;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        My Custom HTTP Server for Kotlin
+    </h1>
+
+    <h2>
+        Kotlin Source Code
+    </h2>
+    <pre><code id="kotlin-code"></code></pre>
+
+    <h2>
+        HTML Source Code
+    </h2>
+    <pre><code id="html-code"></code></pre>
+</body>
+</html>
